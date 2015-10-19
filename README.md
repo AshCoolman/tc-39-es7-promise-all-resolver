@@ -81,9 +81,12 @@ dataStore.then(function (players) {
 });
 ```
 
-Thus this proposal hinges upon the judgement of the value lost without a key-to-value representation in the result, even if it exists in the input.
+Thus this proposal hinges upon the judgement on what is lost when `Promise.all` loses the input's key-to-value representation, in the outputted result.
 
 ## Complications, and overview of solution
 
-Because the iterator protocol could be implemented in an arbitrary (aka unexpected) way by an object, it cannot be anticipated. It is the writers assumption that this is the guiding principle in the Array only result type. However, for other build in types, the behavior is known. Thus the objective of this proposal is to suggest, if the iteractor input given to `Promise.all` is a built in javascript type, then the output could be the same type (with the same characterstics).
+Because the iterator protocol could be implemented in an arbitrary (aka unexpected) way by an object, it cannot be anticipated. However, for in-built types, the behavior is known. Thus, given an iteractor input, `Promise.all` could return a result of the same type (with the same characterstics).
 
+## Next steps
+
+_Create an implementation_
