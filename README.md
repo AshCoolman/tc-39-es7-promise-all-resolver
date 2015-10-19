@@ -1,5 +1,7 @@
 # Tc-39 suggesting: promise.all result not limited to an Array
 
+## intro
+
 Initially just putting out feelers for a smalls suggestion to the implementation of `promise.all`.
 
 ## Problem
