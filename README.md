@@ -50,7 +50,7 @@ Currently the `result` argument passed to the subsequent `then()` call is an Arr
 
 ```javascript
 dataStoreDone.then(function (result) {
-  (result[0] > result[1]) ? 'Somebody won' : 'Someone won');
+  console.log((result[0] > result[1]) ? 'Somebody won' : 'Someone won');
 });
 ```
 
