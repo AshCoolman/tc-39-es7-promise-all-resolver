@@ -1,4 +1,4 @@
-# Tc-39 suggesting: promise.all result not limited to an Array
+# Tc-39 suggesting: type of promise.all result extended from Array to any in-built Javascript iterator
 
 ## intro
 
