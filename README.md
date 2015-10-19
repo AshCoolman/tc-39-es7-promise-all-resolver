@@ -10,7 +10,7 @@ Initially just putting out feelers for a smalls suggestion to the implementation
 
 For instance, given:
 
-```
+```javascript
 // Gets a random number, at a randomly later time (different Math.random seed)
 var extraRandom = function (callback) {
   setTimeout(function () {
@@ -48,7 +48,7 @@ var dataStoreDone = Promise.all(dataStore);
 
 Currently the `result` argument passed to the subsequent `then()` call is an Array, destroying the key-to-value representation:
 
-```
+```javascript
 dataStoreDone.then(function (result) {
   (result[0] > result[1]) ? 'Somebody won' : 'Someone won');
 });
@@ -58,7 +58,7 @@ dataStoreDone.then(function (result) {
 
 Now when the dataStore is done, I'd like to interact with it in the same way - being able to easily iterate with access to value _and keys_.
 
-```
+```javascript
 dataStoreDone.then(function (result) {
   var winner = {val:0, key: null};
   result.forEach(function (val, key) {
@@ -75,7 +75,7 @@ dataStoreDone.then(function (result) {
 
 The programe could be changed to use Arrays and destructuring, thus using the index-to-value representation:
 
-```
+```javascript
 var dataStore = [promiseExtraRandom(), promiseExtraRandom()];
 
 dataStore.then(function (players) {
