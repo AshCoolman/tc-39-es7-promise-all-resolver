@@ -54,12 +54,17 @@ dataStoreDone.then(function (result) {
 
 ## Proposed solution
 
-Now when the dataStore is done, I'd like to interact with it in the same way - being able to easily iterate with access to value _and keys_. 
+Now when the dataStore is done, I'd like to interact with it in the same way - being able to easily iterate with access to value _and keys_.
 
 ```
 dataStoreDone.then(function (result) {
-  
-  console.log((result > result[1]) ? 'Somebody won' : 'Someone won');
+  var winner = {val:0, key: null};
+  result.forEach(function (val, key) {
+    if (val > winner.val) {
+      winner.key = key;
+    }
+  });
+  console.log(JSON.stringify(winner, null, 2));
 });
     
 ```
