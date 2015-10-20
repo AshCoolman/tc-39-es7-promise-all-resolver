@@ -1,0 +1,20 @@
+{
+  "name": "tc-39-suggestion-promise-result-type",
+  "version": "1.0.0",
+  "description": "## intro",
+  "main": "index.js",
+  "scripts": {
+    "prepublish":"node ./node_modules/text-embed/src/index.js ./src/assets/README.md ./README.md '--text-embed:'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AshCoolman/tc-39-suggestion-promise-result-type.git"
+  },
+  "author": "Ashley Coleman <writetofish@gmail.com> (http://ashcoolman.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AshCoolman/tc-39-suggestion-promise-result-type/issues"
+  },
+  "homepage": "https://github.com/AshCoolman/tc-39-suggestion-promise-result-type#readme"
+}
