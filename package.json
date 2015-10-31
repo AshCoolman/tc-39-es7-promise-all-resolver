@@ -4,8 +4,9 @@
   "description": "## intro",
   "main": "index.js",
   "scripts": {
-    "prepublish":"node ./node_modules/text-embed/src/index.js ./src/assets/README.md ./README.md '--text-embed:'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublish":"sh ./shell/build-readme.sh",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/AshCoolman/tc-39-suggestion-promise-result-type/issues"
   },
-  "homepage": "https://github.com/AshCoolman/tc-39-suggestion-promise-result-type#readme"
+  "homepage": "https://github.com/AshCoolman/tc-39-suggestion-promise-result-type#readme",
+  "dependencies": {
+    "babel-core": "6.0.12",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.0.12",
+    "babel-preset-es2015": "6.0.12"
+  }
 }
