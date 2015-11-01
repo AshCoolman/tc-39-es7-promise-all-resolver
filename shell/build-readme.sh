@@ -1,0 +1,1 @@
+node ./node_modules/text-embed/src/index.js ./src/assets/README.md ./README.md '--text-embed:'
