@@ -1,4 +1,11 @@
+import promiseAllMatchIterator from './promise-all-match-iterator';
+
 export default function ( useIterator, useProposed ) {
+
+    var now = function () {
+        return (new Date()).valueOf();
+    }
+
     console.log([
             [
                 'Using Promise.all(',
@@ -12,10 +19,14 @@ export default function ( useIterator, useProposed ) {
     
     // Given a game based on highest number from an async random number generator:
     var extraRandom = function (callback) {
+        let start = now();
         var doCallback = function () {
-                callback(Math.random() * 1000);
+                callback(Math.random() * 10);
             };
-        setTimeout(doCallback,  Math.random() * 1000);
+        setTimeout(function() {
+            doCallback( now() - start );
+            return null;
+        },  Math.random() * 10);
     };
 
     // Promises a random number, at a randomly later time:
@@ -35,6 +46,7 @@ export default function ( useIterator, useProposed ) {
         dataStore.push(promiseExtraRandom());
         dataStoreDone = Promise.all(dataStore).then( function (result) {
             var winner = ( result[0] > result[1] ) ? '1' : '2';
+            console.log( '>> input:', Object.getPrototypeOf(dataStore), '>> output:', Object.getPrototypeOf(result));
             console.log( '>> Player at index "' + winner + '" won\n\n');
         });
     }
@@ -47,6 +59,7 @@ export default function ( useIterator, useProposed ) {
         dataStoreDone = Promise.all(dataStore).then( function (result) {
             var [ ryu, ken ] = result;
             var winner = ( ryu > ken ) ? 'Ryu (implied by result at index 1)' : 'Ken (implied by result at index 2)';
+            console.log( '>> input:', Object.getPrototypeOf(dataStore), '>> output:', Object.getPrototypeOf(result));
             console.log( '>> "' + winner + '" won\n\n');
         });
     } 
@@ -57,14 +70,15 @@ export default function ( useIterator, useProposed ) {
         dataStore = new Map();
         dataStore.set('Ryu', promiseExtraRandom());
         dataStore.set('Ken', promiseExtraRandom());
-        dataStoreDone = Promise.all(dataStore).then( function (result) {
+        dataStoreDone = promiseAllMatchIterator(dataStore).then( function (result) {
             var winner;
             result.forEach(function (val, key) {
                 if ( !winner || val > winner.val ) {
                     winner = {val, key}; 
                 }
             });
-            console.log('>> The hero, "' + winner.key + '" won\n\n');
+            console.log( '>> input:', Object.getPrototypeOf(dataStore), '>> output:', Object.getPrototypeOf(result));
+            console.log( '>> The hero, "' + winner.key + '" won\n\n' );
         });
     }
 
