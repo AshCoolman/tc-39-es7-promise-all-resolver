@@ -1,11 +1,6 @@
-import promiseAllMatchIterator from './promise-all-match-iterator';
+import promiseAllMatchIterator from './promise-all-match-iterable';
 
 export default function ( useIterator, useProposed ) {
-
-    var now = function () {
-        return (new Date()).valueOf();
-    }
-
     console.log([
             [
                 'Using Promise.all(',
@@ -16,16 +11,20 @@ export default function ( useIterator, useProposed ) {
                 'using proposed implementation'
             ].join(''),
         ].join('\n'));
-    
-    // Given a game based on highest number from an async random number generator:
+
+    // Milliseconds now
+    var now = function () {
+        return (new Date()).valueOf();
+    };
+
+    // Async random generator:
     var extraRandom = function (callback) {
         let start = now();
-        var doCallback = function () {
-                callback(Math.random() * 10);
-            };
+        let doCallback = function () {
+            callback(Math.random() * 10);
+        };
         setTimeout(function() {
             doCallback( now() - start );
-            return null;
         },  Math.random() * 10);
     };
 
@@ -37,7 +36,6 @@ export default function ( useIterator, useProposed ) {
     };
 
     var dataStore, dataStoreDone;
-
 
     if (!useIterator) {
         // If you give `promise.all` an `Array`, the result will be an `Array`
@@ -82,15 +80,10 @@ export default function ( useIterator, useProposed ) {
         });
     }
 
-    // Here the dataStore is treated like an Object..
-    dataStore.forEach(function (val, key) {
-        console.log('Brave "' + key + '" has entered the game.');
-    });
-
-    // ...though of course dataStore is an iterator
-    for (let item of dataStore) {
-        // console.log('for .. of: ' + key);
-    }
+        // Here the dataStore is treated like an Object..
+        dataStore.forEach(function (val, key) {
+            console.log('Brave "' + key + '" has entered the game.');
+        });
 
     return dataStoreDone;
 };
