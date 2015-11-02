@@ -16,7 +16,7 @@ export default function (iterator) {
     return Promise.all(iterator).then( function (result) {
         var payload = result;
         if (hasDefaultIterableBehavior(iterator)) {
-            if () {
+            if (Object.getPrototypeOf(iterator) === Map.prototype) {
                 var index = 0,
                     keys = iterator.keys(),
                     payload = new Map();
@@ -25,9 +25,9 @@ export default function (iterator) {
                     payload.set( k, v );
                 }
             } else if (Object.getPrototypeOf(iterator) === TypedArray.prototype) {
-                throw new Error("promise-all-match-iterator - TypedArray not handled yet");
+                throw new Error("promise-all-match-iterable - TypedArray not handled yet");
             } else if (Object.getPrototypeOf(iterator) === Set.prototype) {
-                throw new Error("promise-all-match-iterator - Set not handled yet");
+                throw new Error("promise-all-match-iterable - Set not handled yet");
             }
 
         }
