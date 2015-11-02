@@ -30,27 +30,7 @@ For instance, given an asynchronous _promisified_ random number generator:
 
 ```javascript
 // src/example.js::lines:16-36
-    var now = function () {
-        return (new Date()).valueOf();
-    };
-
-    // Async random generator:
-    var extraRandom = function (callback) {
-        let start = now();
-        let doCallback = function () {
-            callback(Math.random() * 10);
-        };
-        setTimeout(function() {
-            doCallback( now() - start );
-        },  Math.random() * 10);
-    };
-
-    // Promises a random number, at a randomly later time:
-    var promiseExtraRandom = function () {
-        return new Promise(function (done) {
-            extraRandom(done);
-        });
-    };
+--text-embed:./src/example.js::lines:16-36
 ```
 
 A simple game can be created by loading a pair of promises into an iterator. The iterator could be passed to `Promise.all`, and the subsequent result can be examined to find the highest random number a.k.a the "winner".
@@ -61,21 +41,11 @@ Currently, `Promise.all` takes any iterable, like an `Array`, and in the case of
 
 ```javascript
 // /src/example.js::lines:42-49
-        dataStore = [];
-        dataStore.push(promiseExtraRandom());
-        dataStore.push(promiseExtraRandom());
-        dataStoreDone = Promise.all(dataStore).then( function (result) {
-            var winner = ( result[0] > result[1] ) ? '1' : '2';
-            console.log( '>> input:', Object.getPrototypeOf(dataStore), '>> output:', Object.getPrototypeOf(result));
-            console.log( '>> Player at index "' + winner + '" won\n\n');
-        });
+--text-embed:./src/example.js::lines:42-49
 
 // ...
 
-        // Here the dataStore is treated like an Object..
-        dataStore.forEach(function (val, key) {
-            console.log('Brave "' + key + '" has entered the game.');
-        });
+--text-embed:./src/example.js::lines:83-86
 ```
 
 Output:
@@ -93,22 +63,11 @@ Now when `Promise.all` is given a different iterator, like a `Map` the `result` 
 
 ```javascript
 // src/example.js::lines:54-62
-        dataStore = new Map();
-        dataStore.set('Ryu', promiseExtraRandom());
-        dataStore.set('Ken', promiseExtraRandom());
-        dataStoreDone = Promise.all(dataStore).then( function (result) {
-            var [ ryu, ken ] = result;
-            var winner = ( ryu > ken ) ? 'Ryu (implied by result at index 1)' : 'Ken (implied by result at index 2)';
-            console.log( '>> input:', Object.getPrototypeOf(dataStore), '>> output:', Object.getPrototypeOf(result));
-            console.log( '>> "' + winner + '" won\n\n');
-        });
+--text-embed:./src/example.js::lines:54-62
 
 // ...
 
-        // Here the dataStore is treated like an Object..
-        dataStore.forEach(function (val, key) {
-            console.log('Brave "' + key + '" has entered the game.');
-        });
+--text-embed:./src/example.js::lines:83-86
 ```
 
 
@@ -130,26 +89,11 @@ Now when the promises in `dataStore` are fulfilled and the callback is invoked, 
 
 ```javascript
 // src/example.js::lines:68-80
-        dataStore = new Map();
-        dataStore.set('Ryu', promiseExtraRandom());
-        dataStore.set('Ken', promiseExtraRandom());
-        dataStoreDone = promiseAllMatchIterator(dataStore).then( function (result) {
-            var winner;
-            result.forEach(function (val, key) {
-                if ( !winner || val > winner.val ) {
-                    winner = {val, key}; 
-                }
-            });
-            console.log( '>> input:', Object.getPrototypeOf(dataStore), '>> output:', Object.getPrototypeOf(result));
-            console.log( '>> The hero, "' + winner.key + '" won\n\n' );
-        });
+--text-embed:./src/example.js::lines:68-80
 
 // ...
 
-        // Here the dataStore is treated like an Object..
-        dataStore.forEach(function (val, key) {
-            console.log('Brave "' + key + '" has entered the game.');
-        });
+--text-embed:./src/example.js::lines:83-86
 ```
 
 Output:
@@ -165,31 +109,7 @@ Brave "Ken" has entered the game.
 
 ```javascript
 // src/promise-all-match-iterable.js::lines:12-36
-export default function (iterator) {
-    let hasDefaultIterableBehavior = function (iterator) {
-        return true; // Not implemented yet
-    };
-    return Promise.all(iterator).then( function (result) {
-        var payload = result;
-        if (hasDefaultIterableBehavior(iterator)) {
-            if (Object.getPrototypeOf(iterator) === Map.prototype) {
-                var index = 0,
-                    keys = iterator.keys(),
-                    payload = new Map();
-                for (let k of keys) {
-                    let v = result[ index++ ];
-                    payload.set( k, v );
-                }
-            } else if (Object.getPrototypeOf(iterator) === TypedArray.prototype) {
-                throw new Error("promise-all-match-iterable - TypedArray not handled yet");
-            } else if (Object.getPrototypeOf(iterator) === Set.prototype) {
-                throw new Error("promise-all-match-iterable - Set not handled yet");
-            }
-
-        }
-        return payload;
-    });
-};
+--text-embed:./src/promise-all-match-iterable.js::lines:12-36
 ```
 
 ## Complications, and overview of solution
@@ -226,4 +146,3 @@ Re-generate this readme from `src/assets/README.src.md`:
 ```shell
 npm run build-readme
 ```
-
